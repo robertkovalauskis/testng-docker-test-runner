@@ -1,10 +1,9 @@
 pipeline {
-
 	agent any
 	stages {
 	            stage("Pull Latest Image") {
                             steps {
-                                bat "docker pull kovalauskis/selenium-docker"
+                                bat "docker pull kovalauskis/testng-selenium-grid"
                             }
                 }
 
@@ -19,7 +18,6 @@ pipeline {
                                 bat "docker-compose up search-module book-flight-module"
                             }
                 }
-
     }
 
     post {
@@ -28,6 +26,4 @@ pipeline {
             bat "docker-compose down"
         }
     }
-
-
 }
