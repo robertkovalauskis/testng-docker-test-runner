@@ -23,6 +23,13 @@ pipeline {
     post {
         always{
             archiveArtifacts artifacts: 'output/**'
+            allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'target/allure-results']]
+                    ])
             bat "docker-compose down"
         }
     }
