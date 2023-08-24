@@ -18,18 +18,23 @@ pipeline {
                                 bat "docker-compose up search-module book-flight-module"
                             }
                 }
+
+                stage("Generate Allure Report") {
+                            steps {
+                                    allure([
+                                    includeProperties: false,
+                                    jdk: '',
+                                    properties: [],
+                                    reportBuildPolicy: 'ALWAYS',
+                                    results: [[path: 'target/allure-results']]
+                                    ])
+                            }
+                }
     }
 
     post {
         always{
             archiveArtifacts artifacts: 'output/**'
-            allure([
-                    includeProperties: false,
-                    jdk: '',
-                    properties: [],
-                    reportBuildPolicy: 'ALWAYS',
-                    results: [[path: 'target/allure-results']]
-                    ])
             bat "docker-compose down"
         }
     }
